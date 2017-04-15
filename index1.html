@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script
+        src="https://d3js.org/d3.v4.min.js"
+        type="text/javascript"
+        language="javascript">
+    </script>
+    <style>
+    path
+    {
+        fill: none;
+        stroke: #000;
+    }
+
+    .line {
+      fill: none;
+      stroke: green;
+      stroke-width: 3.5px;
+    }
+    .label {
+      font-size: 10pt;
+    }
+
+    </style>
+      </head>
+      <body>
+        <script>
+
+        var margin = {
+            top: 30,
+            right: 30,
+            bottom: 60,
+            left: 60};
+        var width = 600 - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+        var parseTime = d3.timeParse("%Y-%m-%d");
+        var numFormat = d3.formatPrefix(",.0", 1e3)
+
+        var x = d3.scaleTime().range([0, width]);
+        var y = d3.scaleLinear().range([height, 0]);
+
+        var xAxis = d3.axisBottom(x)
+            .tickFormat(d3.timeFormat("%b-%Y"))
+
+        var yAxis = d3.axisLeft(y)
+            .tickFormat(function(d) { return "$" + numFormat(d); });
+
+        var line = d3.line()
+                .x(function(d) { return x(d.date); })
+                .y(function(d) { return y(d.pce); });
+
+        var svg = d3.select("body")
+		      .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		    d3.csv("economics.csv", function(error, data) {
+          data.forEach(function(d) {
+            d.date = parseTime(d.date);
+            d.pce = +d.pce;
+          });
+
+          x.domain(d3.extent(data, function(d) { return d.date; })).nice();
+          y.domain(d3.extent(data, function(d) { return d.pce;  })).nice();
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis)
+            .selectAll("text")
+              .attr("y", 6)
+              .attr("x", 5)
+              .attr("dy", ".35em")
+              .attr("transform", "rotate(45)")
+              .style("text-anchor", "start");
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+              .append("text")
+                .attr("class", "label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -margin.left/1.5)
+                .attr("x", -height/2)
+                .style("text-anchor", "middle")
+                .style("fill", "black")
+                .text("Personal consumption expenditures");
+
+		  var path = svg.append("path")
+				.datum(data)
+				.attr("class", "line")
+				.attr("d", line);
+
+	});
+	   </script>
+  </body>
+</html>
