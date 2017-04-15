@@ -34,8 +34,8 @@
             bottom: 60,
             left: 60};
 
-        var width = 600 - margin.left - margin.right;
-        var height = 400 - margin.top - margin.bottom;
+        var width = 500 - margin.left - margin.right;
+        var height = 350 - margin.top - margin.bottom;
 
         var x = d3.scaleLinear().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
@@ -101,7 +101,7 @@
                 .style("fill", "black")
                 .text("Number of Pies Sold");
 
-          var color = d3.scaleOrdinal(d3.schemeCategory10);
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
 
         svg.append("path")
             .data([data])
@@ -120,9 +120,7 @@
             .attr("class", "line")
             .style("stroke", "green")
             .attr("d", line2);
-
-
-	});
+          });
 	   </script>
   </body>
 </html>

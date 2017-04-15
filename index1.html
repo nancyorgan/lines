@@ -33,8 +33,8 @@
             right: 30,
             bottom: 60,
             left: 60};
-        var width = 600 - margin.left - margin.right;
-        var height = 400 - margin.top - margin.bottom;
+        var width = 500 - margin.left - margin.right;
+        var height = 350 - margin.top - margin.bottom;
 
         var parseTime = d3.timeParse("%Y-%m-%d");
         var numFormat = d3.formatPrefix(",.0", 1e3)
@@ -91,12 +91,11 @@
                 .style("fill", "black")
                 .text("Personal consumption expenditures");
 
-		  var path = svg.append("path")
-				.datum(data)
-				.attr("class", "line")
-				.attr("d", line);
-
-	});
+      	  var path = svg.append("path")
+      			.datum(data)
+      			.attr("class", "line")
+      			.attr("d", line);
+          });
 	   </script>
   </body>
 </html>

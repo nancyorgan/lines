@@ -34,8 +34,8 @@
             bottom: 60,
             left: 60};
 
-        var width = 600 - margin.left - margin.right;
-        var height = 400 - margin.top - margin.bottom;
+        var width = 500 - margin.left - margin.right;
+        var height = 350 - margin.top - margin.bottom;
 
         var x = d3.scaleLinear().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
@@ -46,7 +46,7 @@
         var line = d3.line()
                 .x(function(d) { return x(d.day); })
                 .y(function(d) { return y(d.quantity); });
-
+                
         var svg = d3.select("body")
 		      .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -63,7 +63,7 @@
           data.sort(function(a,b) { return a.day - b.day; });
 
           x.domain(d3.extent(data, function(d) { return d.day; })).nice();
-          y.domain(d3.extent(data, function(d) { return d.quantity;  })).nice();
+          y.domain(d3.extent(data, function(d) { return d.quantity;})).nice();
 
           var dataNest = d3.nest()
               .key(function(d) {return d.person;})
@@ -102,8 +102,8 @@
                               return d.color = color(d.key); })
                   .attr("d", line(d.values));
 
-          });
-	});
+                });
+              });
 	   </script>
   </body>
 </html>

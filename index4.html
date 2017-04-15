@@ -34,8 +34,8 @@
             bottom: 60,
             left: 60};
 
-        var width = 600 - margin.left - margin.right;
-        var height = 400 - margin.top - margin.bottom;
+        var width = 500 - margin.left - margin.right;
+        var height = 350 - margin.top - margin.bottom;
 
         var x = d3.scaleLinear().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
@@ -95,15 +95,22 @@
 
           var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+          svg.selectAll("points")
+            .data(data)
+          .enter().append("circle")
+            .attr("r", 4)
+            .attr("cx", function(d) { return x(d.day); })
+            .attr("cy", function(d) { return y(d.quantity); })
+            .style("fill", function(d) { return color(d.person);});
+
           dataNest.forEach(function(d) {
               svg.append("path")
                   .attr("class", "line")
                   .style("stroke", function() {
                               return d.color = color(d.key); })
                   .attr("d", line(d.values));
-
-          });
-	});
+                });
+              });
 	   </script>
   </body>
 </html>
