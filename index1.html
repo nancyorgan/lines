@@ -36,14 +36,14 @@
         var width = 500 - margin.left - margin.right;
         var height = 350 - margin.top - margin.bottom;
 
-        var parseTime = d3.timeParse("%Y-%m-%d");
-        var numFormat = d3.formatPrefix(",.0", 1e3)
-
         var x = d3.scaleTime().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
 
         var xAxis = d3.axisBottom(x)
-            .tickFormat(d3.timeFormat("%b-%Y"))
+            .tickFormat(d3.timeFormat("%b-%Y"));
+
+        var parseTime = d3.timeParse("%Y-%m-%d");
+        var numFormat = d3.formatPrefix(",.0", 1e3);
 
         var yAxis = d3.axisLeft(y)
             .tickFormat(function(d) { return "$" + numFormat(d); });
@@ -75,7 +75,6 @@
             .selectAll("text")
               .attr("y", 5)
               .attr("x", -5)
-              //.attr("dy", ".35em")
               .attr("transform", "rotate(-45)")
               .style("text-anchor", "end");
 
@@ -89,7 +88,17 @@
                 .attr("x", -height/2)
                 .style("text-anchor", "middle")
                 .style("fill", "black")
-                .text("Personal consumption expenditures");
+                .text("Amount in Billions of Dollars");
+
+          svg.append("g")
+              .attr("class", "title")
+              .append("text")
+              .attr("x", width/2 - margin.left)
+              .attr("y", -5)
+              .attr("text-anchor", "middle")
+              .style("font-size", "16px")
+              .style("font-family", "Arial")
+              .text("Dollars and Dates in D3");
 
       	  var path = svg.append("path")
       			.datum(data)

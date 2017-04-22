@@ -91,7 +91,18 @@
                     .attr("x", -height/2)
                     .style("text-anchor", "middle")
                     .style("fill", "black")
-                    .text("Number of Pies Sold");
+                    .text("Number of Cookies Sold");
+
+
+            svg.append("g")
+                .attr("class", "title")
+                .append("text")
+                .attr("x", width/2 - margin.left)
+                .attr("y", -5)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .style("font-family", "Arial")
+                .text("Cookie Sales over Time in D3");
 
           var color = d3.scaleOrdinal(d3.schemeCategory10);
 
